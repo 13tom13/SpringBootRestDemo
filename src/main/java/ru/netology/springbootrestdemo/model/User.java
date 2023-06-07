@@ -1,15 +1,14 @@
 package ru.netology.springbootrestdemo.model;
 
-import jakarta.validation.constraints.Size;
 
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public final class User {
-    @Size(min = 4, max = 20)
+    @Size(min = 10, max = 30)
     private final String user;
     @Size(min = 4, max = 30)
     private final String password;
-
 
     public User(String user, String password) {
         this.user = user;
