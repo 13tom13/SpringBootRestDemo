@@ -1,6 +1,7 @@
 package ru.netology.springbootrestdemo.server;
 
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 import ru.netology.springbootrestdemo.exceptions.InvalidCredentials;
 import ru.netology.springbootrestdemo.exceptions.UnauthorizedUser;
 import ru.netology.springbootrestdemo.model.Authorities;
@@ -18,26 +19,19 @@ public class AuthorizationService {
         this.userRepository = userRepository;
     }
 
-//    public List<Authorities> getAuthorities(String user, String password) {
-//        if (isEmpty(user) || isEmpty(password)) {
-//            throw new InvalidCredentials("User name or password is empty");
-//        }
-//        List<Authorities> userAuthorities = userRepository.getUserAuthorities(user, password);
-//        if (isEmpty(userAuthorities)) {
-//            throw new UnauthorizedUser("Unknown user " + user);
-//        }
-//        return userAuthorities;
-//    }
-
-    public List<Authorities> getAuthorities(User user) {
-        if (isEmpty(user.user()) || isEmpty(user.password())) {
+    public List<Authorities> getAuthorities(String user, String password) {
+        if (isEmpty(user) || isEmpty(password)) {
             throw new InvalidCredentials("User name or password is empty");
         }
-        List<Authorities> userAuthorities = userRepository.getUserAuthorities(user.user(), user.password());
+        List<Authorities> userAuthorities = userRepository.getUserAuthorities(user, password);
         if (isEmpty(userAuthorities)) {
-            throw new UnauthorizedUser("Unknown user " + user.user());
+            throw new UnauthorizedUser("Unknown user " + user);
         }
         return userAuthorities;
+    }
+
+    public List<Authorities> getAuthorities(@Validated User user) {
+        return getAuthorities(user.getUser(), user.getPassword());
     }
 
     private boolean isEmpty(String str) {
