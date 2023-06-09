@@ -1,19 +1,17 @@
 package ru.netology.springbootrestdemo.controller;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.netology.springbootrestdemo.exceptions.InvalidCredentials;
-import ru.netology.springbootrestdemo.exceptions.UnauthorizedUser;
 import ru.netology.springbootrestdemo.model.Authorities;
+import ru.netology.springbootrestdemo.model.User;
 import ru.netology.springbootrestdemo.server.AuthorizationService;
 
 import java.util.List;
 
 @RestController
+@Validated(User.class)
 public class AuthorizationController {
 
     private final AuthorizationService service;
@@ -23,8 +21,9 @@ public class AuthorizationController {
     }
 
     @GetMapping("/authorize")
-    public List<Authorities> getAuthorities(@RequestParam("user") String user, @RequestParam("password") String password) {
-        return service.getAuthorities(user, password);
+    public List<Authorities> getAuthorities(@Validated User user) {
+        System.out.println("user: " + user.getUser()+  " password: " + user.getPassword());
+        return service.getAuthorities(user);
     }
 
 }

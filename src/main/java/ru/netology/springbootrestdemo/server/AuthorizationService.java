@@ -1,9 +1,11 @@
 package ru.netology.springbootrestdemo.server;
 
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 import ru.netology.springbootrestdemo.exceptions.InvalidCredentials;
 import ru.netology.springbootrestdemo.exceptions.UnauthorizedUser;
 import ru.netology.springbootrestdemo.model.Authorities;
+import ru.netology.springbootrestdemo.model.User;
 import ru.netology.springbootrestdemo.repository.UserRepository;
 
 import java.util.List;
@@ -26,6 +28,10 @@ public class AuthorizationService {
             throw new UnauthorizedUser("Unknown user " + user);
         }
         return userAuthorities;
+    }
+
+    public List<Authorities> getAuthorities(@Validated User user) {
+        return getAuthorities(user.getUser(), user.getPassword());
     }
 
     private boolean isEmpty(String str) {
