@@ -11,6 +11,7 @@ import ru.netology.springbootrestdemo.server.AuthorizationService;
 import java.util.List;
 
 @RestController
+@Validated(User.class)
 public class AuthorizationController {
 
     private final AuthorizationService service;
