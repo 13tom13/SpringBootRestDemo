@@ -1,8 +1,9 @@
 package ru.netology.springbootrestdemo.model;
 
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 
 public final class User {
     @Size(min = 10, max = 30)
