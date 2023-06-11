@@ -1,17 +1,16 @@
 package ru.netology.springbootrestdemo.controller;
 
 
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.netology.springbootrestdemo.model.Authorities;
 import ru.netology.springbootrestdemo.model.User;
 import ru.netology.springbootrestdemo.server.AuthorizationService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@Validated(User.class)
 public class AuthorizationController {
 
     private final AuthorizationService service;
@@ -21,9 +20,8 @@ public class AuthorizationController {
     }
 
     @GetMapping("/authorize")
-    public List<Authorities> getAuthorities(@Validated User user) {
-        System.out.println("user: " + user.getUser()+  " password: " + user.getPassword());
+    public List<Authorities> getAuthorities(@Valid User user) {
+        System.out.println("user: " + user.user() + " password: " + user.password());
         return service.getAuthorities(user);
     }
-
 }
