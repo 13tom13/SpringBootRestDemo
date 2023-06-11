@@ -31,7 +31,7 @@ public class AuthorizationService {
     }
 
     public List<Authorities> getAuthorities(@Validated User user) {
-        return getAuthorities(user.getUser(), user.getPassword());
+        return getAuthorities(user.user(), user.password());
     }
 
     private boolean isEmpty(String str) {
