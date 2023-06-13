@@ -1,0 +1,17 @@
+   server {
+        listen       80;
+        server_name  localhost;
+
+        #charset koi8-r;
+
+        access_log  logs/host.access.log;
+        error_log logs/error.log;
+
+        location / {
+            proxy_pass localhost:8080/$request_uri;
+        }
+
+        location /signin {
+         alias   html/;
+         index  signin.html;
+        }
