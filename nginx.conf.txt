@@ -1,0 +1,31 @@
+  upstream myserverstest {
+        server localhost:8080;
+        server localhost:8081;
+        server localhost:8082;
+        }
+
+    server {
+        listen       80;
+        server_name  localhost;
+
+        #charset koi8-r;
+
+        access_log  logs/host.access.log;
+        error_log   logs/error.log;
+
+        location / {
+         root html/;
+         index index.html;
+        }
+        location /authorize {
+         proxy_pass http://myserverstest;
+        }
+
+        location /signin {
+         alias  html/;
+         index  signin.html;
+        }
+
+        location /test {
+            proxy_pass http://myserverstest;
+        }
